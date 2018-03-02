@@ -29,7 +29,7 @@
 	</properties>
 
 	<modules>
-		<module>client</module>
 		<module>server</module>
+		<module>client</module>
 	</modules>
 </project>
