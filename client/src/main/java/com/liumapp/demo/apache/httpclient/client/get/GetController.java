@@ -21,11 +21,11 @@ import java.io.InputStreamReader;
 @RequestMapping("get")
 public class GetController {
 
-    @RequestMapping("/toGoogle")
-    public void sendGetRequestToGoogle () {
+    @RequestMapping("/toBaidu")
+    public String sendGetRequestToGoogle () {
 
         try {
-            String url = "http://www.google.com/search?q=httpClient";
+            String url = "http://www.baidu.com";
 
             HttpClient client = HttpClientBuilder.create().build();
             HttpGet request = new HttpGet(url);
@@ -45,12 +45,15 @@ public class GetController {
             while ((line = rd.readLine()) != null) {
                 result.append(line);
             }
+
+            return result.toString();
         } catch (ClientProtocolException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        return "error";
     }
 
     @RequestMapping("/toLocal")
