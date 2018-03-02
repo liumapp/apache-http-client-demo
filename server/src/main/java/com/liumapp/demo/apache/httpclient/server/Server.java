@@ -8,11 +8,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * E-mail:liumapp.com@gmail.com
  * home-page:http://www.liumapp.com
  */
-@SpringBootApplication(scanBasePackages = {"com.liumapp"})
-public class Main {
+@SpringBootApplication
+public class Server {
 
     public static void main(String[] args) {
-        SpringApplication.run(Main.class , args);
+        SpringApplication.run(Server.class , args);
     }
 
 }
