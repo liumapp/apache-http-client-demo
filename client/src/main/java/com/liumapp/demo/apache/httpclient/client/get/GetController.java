@@ -22,7 +22,7 @@ import java.io.InputStreamReader;
 public class GetController {
 
     @RequestMapping("/toBaidu")
-    public String sendGetRequestToGoogle () {
+    public String sendGetRequestToBaidu () {
 
         try {
             String url = "http://www.baidu.com";
@@ -57,8 +57,37 @@ public class GetController {
     }
 
     @RequestMapping("/toLocal")
-    public void sendGetRequestToLocal () {
+    public String sendGetRequestToLocal () {
+        try {
+            String url = "http://localhost:8081/";
 
+            HttpClient httpClient = HttpClientBuilder.create().build();
+            HttpGet request = new HttpGet(url);
+
+            request.addHeader("User-Agent" , "Mozila/5.0");
+            HttpResponse response = httpClient.execute(request);
+
+            System.out.println("Response Code : " + response.getStatusLine().getStatusCode());
+
+            BufferedReader reader = new BufferedReader(
+                    new InputStreamReader(response.getEntity().getContent())
+            );
+
+            StringBuffer result = new StringBuffer();
+            String line = "";
+
+            while ((line = reader.readLine()) != null) {
+                result.append(line);
+            }
+
+            return result.toString();
+        } catch (ClientProtocolException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return "error";
     }
 
 }
