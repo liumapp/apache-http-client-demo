@@ -1,9 +1,7 @@
 package com.liumapp.demo.apache.httpclient.server.controller;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.liumapp.demo.apache.httpclient.server.pattern.User;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * Created by liumapp on 3/3/18 11:09 AM.
@@ -20,8 +18,8 @@ public class IndexController {
     }
 
     @PostMapping("/params")
-    public String params () {
-        return "success";
+    public String params (@RequestBody User user) {
+        return user.toString();
     }
 
 }

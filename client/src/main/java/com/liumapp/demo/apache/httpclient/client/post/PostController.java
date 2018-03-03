@@ -1,11 +1,14 @@
 package com.liumapp.demo.apache.httpclient.client.post;
 
+import com.alibaba.fastjson.JSON;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,8 +18,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by liumapp on 3/2/18.
@@ -30,22 +36,25 @@ public class PostController {
     @RequestMapping("/toLocal")
     public String postToApple () {
         try {
-            String url = "https://selfsolve.apple.com/wcResults.do";
+            String url = "http://localhost:8081/params";
 
             HttpClient client = HttpClientBuilder.create().build();
             HttpPost post = new HttpPost(url);
 
             // add header
             post.setHeader("User-Agent", "Mozila/5.0");
+            post.setHeader("Content-Type" , "application/json");
 
-            List<NameValuePair> urlParameters = new ArrayList<NameValuePair>();
-            urlParameters.add(new BasicNameValuePair("sn", "C02G8416DRJM"));
-            urlParameters.add(new BasicNameValuePair("cn", ""));
-            urlParameters.add(new BasicNameValuePair("locale", ""));
-            urlParameters.add(new BasicNameValuePair("caller", ""));
-            urlParameters.add(new BasicNameValuePair("num", "12345"));
+            HashMap<String , Object> urlParameters = new HashMap<String , Object>();
+            urlParameters.put("id" , "2018030314");
+            urlParameters.put("name" , "zhangsan");
+            urlParameters.put("sex" , "boy");
 
-            post.setEntity(new UrlEncodedFormEntity(urlParameters));
+            String jsonString = JSON.toJSONString(urlParameters);
+
+            StringEntity stringEntity = new StringEntity(jsonString , Charset.forName("utf-8"));
+
+            post.setEntity(stringEntity);
 
             HttpResponse response = client.execute(post);
             System.out.println("Response Code : "
